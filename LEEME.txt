@@ -1,0 +1,8 @@
+LULATREN - VERSION DE DEMOSTRACION PARA GITHUB PAGES
+
+Sube a la raiz de un repositorio nuevo: index.html, CSS_trenes.css, JS_trenes.js, almacenamiento_demo.js y la carpeta imagenes completa.
+En GitHub: Settings > Pages > Deploy from a branch > main > /(root) > Save.
+Esta version conserva la interfaz y utiliza IndexedDB en cada navegador. No se conecta a MySQL ni a Tomcat.
+El usuario administrador de prueba es admin y la clave 2026; NO es seguridad real.
+Usar SOLO datos ficticios para las pruebas: no introducir DPI, telefonos, correos ni datos personales reales.
+Las reservas de un dispositivo no se comparten con otros dispositivos.
