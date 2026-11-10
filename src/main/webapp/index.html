@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LULATRÉN de Guatemala</title>
+    <link rel="stylesheet" href="CSS_trenes.css">
+</head>
+<body>
+
+    <!-- Header / Barra Superior -->
+    <header class="header">
+        <div class="logo-container">
+            <h1>LULATRÉN</h1>
+            <span class="slogan-header">de Guatemala</span>
+        </div>
+        <nav class="nav">
+            <button id="btn-login-modal" class="btn-secondary">Iniciar Sesión Admin</button>
+            <button id="btn-cerrar-admin" class="btn-hero btn-admin hidden">Cerrar Sesión Admin</button>
+        </nav>
+    </header>
+
+    <!-- Banner Hero a Pantalla Completa con Carrusel -->
+    <section id="seccion-hero" class="hero-container">
+        <div class="hero-slider">
+            <img src="imagenes/Imagen1_tren.jpg" alt="Tren Principal" class="slide active">
+            <img src="imagenes/Imagen2_tren.jpg" alt="Interior del Tren" class="slide">
+            <img src="imagenes/Imagen3_tren.jpg" alt="Vías del Tren" class="slide">
+        </div>
+        
+        <div class="hero-overlay">
+            <h2>Bienvenido a LULATRÉN</h2>
+            <p>Viajes turísticos y comerciales con confort y puntualidad.</p>
+            
+            <div class="hero-buttons">
+                <button id="btn-hero-crear-cuenta" class="btn-hero btn-admin" style="background-color: #f39c12;">Crear Cuenta</button>
+                <button id="btn-ver-destinos" class="btn-hero btn-destinos">Ver Destinos</button>
+            </div>
+        </div>
+    </section>
+
+    <main class="main-content-full">
+        <!-- Galería Visual de Destinos -->
+        <section id="galeria-destinos" class="card-seccion hidden-section">
+            <h2>Nuestros Destinos y Rutas</h2>
+            <p>Explore los maravillosos paisajes a los que puede viajar con nuestra red ferroviaria:</p>
+            
+            <div class="grid-destinos">
+                <div class="card-destino">
+                    <img src="imagenes/AntiguaG.jpg" alt="Antigua Guatemala">
+                    <div class="destino-info">
+                        <h3>Antigua Guatemala</h3>
+                        <p>Salidas diarias desde Estación Central. Disfrute de la arquitectura colonial y vistas volcánicas.</p>
+                        <button class="btn-ver-mas" onclick="abrirDetalle('antigua')">Ver más información</button>
+                    </div>
+                </div>
+
+                <div class="card-destino">
+                    <img src="imagenes/Escuintla.jpg" alt="Escuintla">
+                    <div class="destino-info">
+                        <h3>Escuintla (Costa Sur)</h3>
+                        <p>Conexión rápida con la región sur del país con vagones climatizados y alta comodidad.</p>
+                        <button class="btn-ver-mas" onclick="abrirDetalle('escuintla')">Ver más información</button>
+                    </div>
+                </div>
+
+                <div class="card-destino">
+                    <img src="imagenes/Quetzaltenango.jpg" alt="Quetzaltenango">
+                    <div class="destino-info">
+                        <h3>Quetzaltenango (Xela)</h3>
+                        <p>Ruta panorámica de montaña con servicios de primera clase y cafetería a bordo.</p>
+                        <button class="btn-ver-mas" onclick="abrirDetalle('quetzaltenango')">Ver más información</button>
+                    </div>
+                </div>
+
+                <div class="card-destino">
+                    <img src="imagenes/PuertoBarrios.jpg" alt="Puerto Barrios">
+                    <div class="destino-info">
+                        <h3>Puerto Barrios (Atlántico)</h3>
+                        <p>Ruta histórica del Ferrocarril del Norte. Viaje panorámico hacia el Caribe guatemalteco.</p>
+                        <button class="btn-ver-mas" onclick="abrirDetalle('barrios')">Ver más información</button>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <button id="btn-ver-tarifas-gate" class="btn-tarifas-principal">Ver Tarifas y Cotizar</button>
+            </div>
+        </section>
+
+        <!-- SECCIÓN: TARIFAS Y COTIZACIÓN -->
+        <section id="seccion-tarifas" class="seccion-fullscreen hidden-section">
+            <div class="capa-fondo-fullscreen"></div>
+            
+            <div class="contenido-fullscreen">
+                <div class="header-cotizador">
+                    <h2>Cotizador de Tarifas y Rutas</h2>
+                    <p>Seleccione su destino y configure los detalles de su viaje.</p>
+                </div>
+
+                <div class="layout-pantalla-completa">
+                    <div class="columna-izquierda-opciones">
+                        <div class="bloque-opcion">
+                            <label for="select-destino"><strong>Seleccionar Destino:</strong></label>
+                            <select id="select-destino" class="input-std-dark">
+                                <option value="antigua">Antigua Guatemala</option>
+                                <option value="escuintla">Escuintla (Costa Sur)</option>
+                                <option value="quetzaltenango">Quetzaltenango (Xela)</option>
+                                <option value="barrios">Puerto Barrios (Atlántico)</option>
+                            </select>
+                        </div>
+
+                        <div class="bloque-opcion">
+                            <label><strong>Horarios Disponibles:</strong></label>
+                            <div id="box-horarios" class="horarios-container"></div>
+                        </div>
+
+                        <div class="bloque-opcion grid-pasajeros">
+                            <div class="campo">
+                                <label for="num-adultos">Adultos:</label>
+                                <input type="number" id="num-adultos" min="1" max="10" value="1" class="input-std-dark">
+                            </div>
+                            <div class="campo">
+                                <label for="num-ninos">Niños:</label>
+                                <input type="number" id="num-ninos" min="0" max="10" value="0" class="input-std-dark">
+                            </div>
+                        </div>
+
+                        <div id="bloque-edad-ninos" class="bloque-opcion hidden-section">
+                            <label for="select-edad-ninos"><strong>Rango de edad de niños:</strong></label>
+                            <select id="select-edad-ninos" class="input-std-dark">
+                                <option value="menor">Menores de 12 años (50% de Descuento)</option>
+                                <option value="mayor">Mayores de 12 años (Tarifa Normal)</option>
+                            </select>
+                        </div>
+
+                        <div class="bloque-opcion">
+                            <label><strong>Paquete de Viaje:</strong></label>
+                            <div class="lista-paquetes">
+                                <label class="opcion-paquete-dark">
+                                    <input type="radio" name="paquete" value="basico" checked>
+                                    <div class="det-paquete">
+                                        <span>Solo pasaje con equipaje liviano (10 kilos)</span>
+                                        <strong id="precio-basico">Q 45.00</strong>
+                                    </div>
+                                </label>
+
+                                <label class="opcion-paquete-dark">
+                                    <input type="radio" name="paquete" value="ejecutivo">
+                                    <div class="det-paquete">
+                                        <span>Pasaje con desayuno o almuerzo incluido</span>
+                                        <strong id="precio-ejecutivo">Q 85.00</strong>
+                                    </div>
+                                </label>
+
+                                <label class="opcion-paquete-dark">
+                                    <input type="radio" name="paquete" value="vip">
+                                    <div class="det-paquete">
+                                        <span>Paquete VIP (Vagón amplio, A/C, asientos reclinables)</span>
+                                        <strong id="precio-vip">Q 140.00</strong>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="resumen-pago-dark">
+                            <span>Total a pagar:</span>
+                            <strong id="total-cotizado">Q 45.00</strong>
+                        </div>
+
+                        <button id="btn-reservar-final" class="btn-continuar-principal">Continuar Reserva</button>
+                    </div>
+
+                    <div class="columna-derecha-mapa">
+                        <div id="tarjeta-mapa-unificada" class="tarjeta-mapa-fullscreen">
+                            <div class="mapa-contenedor-center">
+                                <img id="img-mapa-destino" src="imagenes/mapaA.png" alt="Mapa de Ruta">
+                            </div>
+
+                            <div class="ficha-tecnica-translucida">
+                                <h4 id="mapa-titulo-destino">Estación Central - Antigua Guatemala</h4>
+                                <div class="grid-tecnico-fullscreen">
+                                    <div><span>Origen:</span> <strong id="info-origen">Estación Central</strong></div>
+                                    <div><span>Destino:</span> <strong id="info-destino">Estación Antigua</strong></div>
+                                    <div><span>Distancia:</span> <strong id="info-distancia">45 km</strong></div>
+                                    <div><span>Velocidad:</span> <strong id="info-velocidad">40 km/h</strong></div>
+                                    <div><span>Tiempo:</span> <strong id="info-tiempo">1h 15min</strong></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN: PANEL DE ADMINISTRADOR A PANTALLA COMPLETA (SPLIT-VIEW LIMPIA) -->
+        <section id="seccion-admin-dashboard" class="seccion-admin-split hidden-section">
+            <div class="admin-split-container">
+                
+                <!-- Lado Izquierdo: Branding e Imagen del Tren -->
+                <div class="admin-split-left">
+                    <div class="admin-brand-header">
+                        <img src="imagenes/lulatren_logo.png" alt="LULATRÉN" class="admin-logo-img" onerror="this.src='https://via.placeholder.com/120?text=LULATRÉN'">
+                        <h2>LULATRÉN</h2>
+                    </div>
+                    <div class="admin-hero-image-frame">
+                        <img src="imagenes/Imagen1_tren.jpg" alt="Tren LULATRÉN" class="admin-train-img">
+                    </div>
+                </div>
+
+                <!-- Lado Derecho: Menú de Botones y Visor Directo -->
+                <div class="admin-split-right">
+                    <!-- Menú Principal de Botones -->
+                    <div id="admin-menu-botones" class="admin-menu-list">
+                        <button type="button" class="btn-admin-tab" onclick="mostrarDetalleAdmin('ingresos')">
+                            Ingresos
+                        </button>
+                        
+                        <button type="button" class="btn-admin-tab" onclick="mostrarDetalleAdmin('reservas')">
+                            Reservas
+                        </button>
+                        
+                        <button type="button" class="btn-admin-tab" onclick="mostrarDetalleAdmin('evaluaciones')">
+                            Resumen de evaluaciones
+                        </button>
+                        
+                        <button type="button" id="btn-cerrar-admin-panel" class="btn-admin-tab btn-admin-logout">
+                            Cerrar admin
+                        </button>
+                    </div>
+
+                    <!-- Contenido Dinámico de Admin (Sin Modales ni Sombras) -->
+                    <div id="admin-panel-contenido" class="admin-content-viewer hidden-section">
+                        <div class="admin-content-header">
+                            <h3 id="admin-contenido-titulo">Detalle</h3>
+                            <button type="button" class="btn-regresar-menu" onclick="regresarMenuAdmin()">← Volver al Menú</button>
+                        </div>
+                        <div id="admin-contenido-body" class="admin-content-body"></div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+       
+<!-- SECCIÓN: VISTA DEL BOLETO EMITIDO -->
+<section id="seccion-boleto" class="seccion-boleto-final hidden-section">
+
+    <div id="area-ticket-imprimir"></div>
+
+    <div style="text-align: center; margin-top: 25px;">
+        <button onclick="window.print()"
+                class="btn-tarifas-principal">
+            Imprimir / Guardar Ticket PDF
+        </button>
+
+        <button id="btn-nueva-reserva"
+                class="btn-secondary"
+                style="margin-left: 10px; padding: 12px 25px;">
+            Realizar Nueva Cotización
+        </button>
+    </div>
+
+    <!-- SECCIÓN DEL DIPLOMA -->
+    <div id="seccion-diploma"
+         class="hidden-section"
+         style="margin-top: 35px; text-align: center;">
+
+        <h2>Diploma de Aprobación LULATRÉN</h2>
+
+        <div id="area-diploma-imprimir"></div>
+
+        <button id="btn-imprimir-diploma"
+                type="button"
+                class="btn-tarifas-principal"
+                style="margin-top: 20px;">
+            Imprimir / Guardar Diploma PDF
+        </button>
+
+    </div>
+
+</section>
+</main>
+
+
+    <!-- MODAL: CREAR CUENTA DE CLIENTE -->
+    <div id="modal-crear-cuenta" class="modal hidden">
+        <div class="modal-content admin-box">
+            <span id="close-modal-cuenta" class="close">&times;</span>
+            <h3 style="color: #1b365d;">Crear Cuenta de Cliente</h3>
+            <p style="font-size: 0.85rem; color: #666; margin-bottom: 15px;">Regístrese para cotizar y comprar sus boletos en LULATRÉN.</p>
+            <form id="form-crear-cuenta">
+                <div class="form-group">
+                    <label for="nuevo-usuario">Nombre de Usuario:</label>
+                    <input type="text" id="nuevo-usuario" required placeholder="Ej: jmorales">
+                </div>
+                <div class="form-group">
+                    <label for="nueva-pass">Contraseña:</label>
+                    <input type="password" id="nueva-pass" required placeholder="••••••••">
+                </div>
+                <div class="form-group">
+                    <label for="confirmar-pass">Confirmar Contraseña:</label>
+                    <input type="password" id="confirmar-pass" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn-primary" style="background-color: #f39c12;">Registrarse</button>
+                <p id="cuenta-msg" class="error-text hidden">Las contraseñas no coinciden.</p>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: REGISTRO DE PASAJEROS -->
+    <div id="modal-registro" class="modal hidden">
+        <div class="modal-registro-content">
+            <span id="close-modal-registro" class="close-registro">&times;</span>
+            
+            <div class="header-registro-curvo">
+                <div class="header-registro-info">
+                    <span class="label-datos">DATOS PERSONALES</span>
+                    <h2>LULATRÉN</h2>
+                    <ul>
+                        <li>Este formulario es para reservar su compra, ingrese sus datos y de clic en reservar.</li>
+                        <li>Se generará un ticket que debe presentar el día de su viaje.</li>
+                    </ul>
+                    <p class="guau-text">¡Gracias por preferirnos, será un guau viaje!</p>
+                </div>
+                <div class="logo-circulo-container">
+                    <div class="logo-circulo-blanco">
+                        <img src="imagenes/lulatren_logo.png" alt="Logo LULATRÉN" onerror="this.src='https://via.placeholder.com/150?text=LULATRÉN'">
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-form-body">
+                <form id="passengerForm">
+                    <fieldset class="form-fieldset">
+                        <legend class="form-legend">Datos Personales</legend>
+                        
+                        <div class="form-group-custom full-width">
+                            <label for="fullName">Nombre completo:</label>
+                            <input type="text" id="fullName" class="input-crema" required placeholder="Ej: Juan Carlos Morales Pérez">
+                        </div>
+
+                        <div class="form-row-custom">
+                            <div class="form-group-custom">
+                                <label for="dpi">DPI:</label>
+                                <input type="text" id="dpi" class="input-crema" maxlength="13" required placeholder="2450 12345 0101">
+                            </div>
+                            <div class="form-group-custom">
+                                <label for="passport">Pasaporte (para extranjeros):</label>
+                                <input type="text" id="passport" class="input-crema">
+                            </div>
+                        </div>
+
+                        <div class="form-group-custom full-width">
+                            <label for="email">Correo Electrónico:</label>
+                            <input type="email" id="email" class="input-crema" required placeholder="ejemplo@correo.com">
+                        </div>
+
+                        <div class="form-row-custom">
+                            <div class="form-group-custom">
+                                <label for="phone">Teléfono:</label>
+                                <input type="tel" id="phone" class="input-crema" maxlength="8" required placeholder="55555555">
+                            </div>
+                            <div class="form-group-custom">
+                                <label for="inputCount">¿Cuántos menores de edad viajan?</label>
+                                <input type="number" id="inputCount" class="input-crema input-contador" min="0" value="0">
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="form-fieldset">
+                        <legend class="form-legend minor-legend">
+                            Datos del menor de edad <span class="minor-legend-sub">(esto se llena solo si llevan a niños)</span>
+                        </legend>
+                        
+                        <div id="childDataContainer"></div>
+                    </fieldset>
+
+                    <div class="button-container-custom">
+                        <button type="submit" class="btn-reserva-yellow">RESERVAR</button>
+                        <button type="button" class="btn-borrar-datos" onclick="borrarDatos()">BORRAR DATOS</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Emergente "Ver más" -->
+    <div id="modal-destino" class="modal hidden">
+        <div class="modal-content">
+            <span onclick="cerrarDetalle()" class="close">&times;</span>
+            <h3 id="modal-titulo-destino">Nombre del Destino</h3>
+            <div id="modal-cuerpo-destino" style="margin-top: 15px; text-align: left;"></div>
+        </div>
+    </div>
+
+    <!-- Modal de Iniciar Sesión Admin (admin / 2026) -->
+    <div id="modal-admin" class="modal hidden">
+        <div class="modal-content admin-box">
+            <span id="close-modal" class="close">&times;</span>
+            <h3>Iniciar Sesión Admin</h3>
+            <p style="font-size: 0.85rem; color: #666; margin-bottom: 15px;">Ingrese sus credenciales de usuario para administrar el sistema.</p>
+            <form id="form-admin">
+                <div class="form-group">
+                    <label for="user-admin">Usuario:</label>
+                    <input type="text" id="user-admin" autocomplete="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="pass-admin">Contraseña:</label>
+                    <input type="password" id="pass-admin" autocomplete="current-password" required>
+                </div>
+                <button type="submit" class="btn-primary">Ingresar</button>
+                <p id="admin-msg" class="error-text hidden">Credenciales incorrectas (admin / 2026)</p>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal Evaluación de Satisfacción -->
+    <div id="modal-evaluacion" class="modal hidden">
+        <div class="modal-eval-custom">
+            <div class="eval-card-header">
+                <img src="imagenes/trencito.png" alt="Trencito LULATRÉN" class="img-trencito-header" onerror="this.src='trencito.png'">
+                <h2>Califica nuestro servicio</h2>
+            </div>
+
+            <div class="eval-card-body">
+                <p class="eval-subtitle">Valoramos mucho tu experiencia y tus opiniones</p>
+
+                <form id="form-satisfaccion">
+                    <div class="eval-group">
+                        <label class="eval-label">1. ¿Cómo califica la usabilidad de nuestra plataforma web?</label>
+                        <div class="radio-options-row">
+                            <label><input type="radio" name="eval_p1" value="Excelente" required> Excelente</label>
+                            <label><input type="radio" name="eval_p1" value="Buena"> Buena</label>
+                            <label><input type="radio" name="eval_p1" value="Regular"> Regular</label>
+                            <label><input type="radio" name="eval_p1" value="Mala"> Mala</label>
+                        </div>
+                    </div>
+
+                    <div class="eval-group">
+                        <label for="eval_p2" class="eval-label">2. ¿Cuál es el propósito principal de su viaje con LULATRÉN?</label>
+                        <select id="eval_p2" class="input-eval-dark" required>
+                            <option value="">-- Seleccione una opción --</option>
+                            <option value="Turismo / Vacaciones">Turismo / Vacaciones</option>
+                            <option value="Viaje con Mascota">Paseo / Recreativo con Mascota</option>
+                            <option value="Negocios / Trabajo">Negocios / Trabajo</option>
+                            <option value="Visita Familiar">Visita Familiar</option>
+                        </select>
+                    </div>
+
+                    <div class="eval-group">
+                        <label class="eval-label">3. ¿Qué aspectos considera más importantes en un viaje en tren?</label>
+                        <div class="checkbox-grid">
+                            <label><input type="checkbox" name="eval_p3" value="Puntualidad"> Puntualidad</label>
+                            <label><input type="checkbox" name="eval_p3" value="Comodidad / AC"> Comodidad y A/C</label>
+                            <label><input type="checkbox" name="eval_p3" value="Pet-Friendly"> Políticas Pet-Friendly</label>
+                            <label><input type="checkbox" name="eval_p3" value="Seguridad"> Seguridad en estación</label>
+                        </div>
+                    </div>
+
+                    <div class="eval-group">
+                        <label for="eval_p4" class="eval-label">4. ¿Qué tan probable es que recomiende LULATRÉN? (<span id="range-val">8</span> / 10):</label>
+                        <input type="range" id="eval_p4" min="1" max="10" value="8" class="range-slider" oninput="document.getElementById('range-val').innerText = this.value">
+                    </div>
+
+                    <div class="eval-group">
+                        <label for="eval_p5" class="eval-label">5. ¿Cuántos viajes al año estima realizar con nosotros?</label>
+                        <input type="number" id="eval_p5" class="input-eval-dark input-contador" min="1" max="50" value="2" required>
+                    </div>
+
+                    <div class="eval-group">
+                        <label for="eval_p6" class="eval-label">6. Comentarios o sugerencias para mejorar el servicio:</label>
+                        <textarea id="eval_p6" class="input-eval-dark eval-textarea" rows="3" placeholder="Escriba aquí sus comentarios..."></textarea>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 25px;">
+                        <button type="submit" class="btn-reserva-yellow">FINALIZAR Y GENERAR BOLETO</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="JS_trenes.js"></script>
+</body>
+</html>
